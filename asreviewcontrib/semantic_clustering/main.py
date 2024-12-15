@@ -30,12 +30,13 @@ class SemClusEntryPoint(BaseEntryPoint):
             run_clustering_steps(
                 data,
                 args.output,
-                transformer=args.transformer)
+                args.reduce_dimensionality,
+                args.remove_abstracts,
+                args.remove_urls)
 
         elif args.app:
-            # url = "http://127.0.0.1:8050/"
-            # webbrowser.open(url, new=2, autoraise=True)
             run_app(args.app, args.metadata)
+
         sys.exit(1)
 
 
@@ -63,7 +64,6 @@ def _parse_arguments(version="Unknown", argv=None):
         metavar="INPUT FILEPATH",
         help="runs the app from a file created with the semantic clustering "
         "extension",
-        # type=argparse.FileType('r', encoding='UTF-8')
         type=str,
     )
 
@@ -73,7 +73,6 @@ def _parse_arguments(version="Unknown", argv=None):
         metavar="INPUT FILEPATH",
         help="runs the app from a file created with the semantic clustering "
         "extension metadata",
-        # type=argparse.FileType('r', encoding='UTF-8')
         type=str,
     )
 
@@ -99,6 +98,24 @@ def _parse_arguments(version="Unknown", argv=None):
         metavar="TRANSFORMER",
         type=str,
         default='allenai/scibert_scivocab_uncased'
+    )
+
+    parser.add_argument(
+        "--reduce_dimensionality",
+        action="store_true",
+        help="reduce dimensionality after top2vec",
+    )
+
+    parser.add_argument(
+        "--remove_abstracts",
+        action="store_true",
+        help="remove abstracts",
+    )
+
+    parser.add_argument(
+        "--remove_urls",
+        action="store_true",
+        help="remove urls",
     )
 
     # Exit if no arguments are given
