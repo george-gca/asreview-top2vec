@@ -38,16 +38,10 @@ setup(
     keywords='asreview extension semantic clustering clusters visualization',
     packages=find_namespace_packages(include=['asreviewcontrib.*']),
     install_requires=[
-        "numpy",
-        "matplotlib",
         "asreview",
-        "dash",
-        "plotly",
-        "sklearn",
-        "transformers",
-        "numpy",
-        "seaborn",
-        "torch",
+        "scikit-learn",
+        "tensorboard",
+        "top2vec",
     ],
 
     extras_require={

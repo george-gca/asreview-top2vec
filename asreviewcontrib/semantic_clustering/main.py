@@ -33,16 +33,16 @@ class SemClusEntryPoint(BaseEntryPoint):
                 transformer=args.transformer)
 
         elif args.app:
-            url = "http://127.0.0.1:8050/"
-            webbrowser.open(url, new=2, autoraise=True)
-            run_app(args.app)
+            # url = "http://127.0.0.1:8050/"
+            # webbrowser.open(url, new=2, autoraise=True)
+            run_app(args.app, args.metadata)
         sys.exit(1)
 
 
 # check file extension
 def _valid_file(fp):
-    if Path(fp).suffix.lower() != ".csv":
-        raise ValueError('File must have a .csv extension')
+    if Path(fp).suffix.lower() != ".tsv":
+        raise ValueError('File must have a .tsv extension')
 
 
 # argument parser
@@ -63,7 +63,18 @@ def _parse_arguments(version="Unknown", argv=None):
         metavar="INPUT FILEPATH",
         help="runs the app from a file created with the semantic clustering "
         "extension",
-        type=argparse.FileType('r', encoding='UTF-8')
+        # type=argparse.FileType('r', encoding='UTF-8')
+        type=str,
+    )
+
+    parser.add_argument(
+        "-m",
+        "--metadata",
+        metavar="INPUT FILEPATH",
+        help="runs the app from a file created with the semantic clustering "
+        "extension metadata",
+        # type=argparse.FileType('r', encoding='UTF-8')
+        type=str,
     )
 
     parser.add_argument(
@@ -79,7 +90,7 @@ def _parse_arguments(version="Unknown", argv=None):
         help="output file name",
         metavar="OUTPUT FILE NAME",
         type=str,
-        default="output.csv"
+        default="output.tsv"
     )
 
     parser.add_argument(
@@ -98,8 +109,8 @@ def _parse_arguments(version="Unknown", argv=None):
     args = parser.parse_args(argv)
 
     # Check if the file extension is correct
-    if args.app is not None:
-        _valid_file(args.app.name)
+    # if args.app is not None:
+        # _valid_file(args.app)
 
     if args.output is not None:
         _valid_file(args.output)
