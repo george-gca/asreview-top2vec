@@ -38,7 +38,7 @@ class Top2VecEntryPoint(BaseEntryPoint):
 
         elif args.topics_information:
             data = load_data(args.topics_information)
-            gather_topics_information(data, args.model_file)
+            gather_topics_information(data, args.model_file, args.words_per_topic)
 
         sys.exit(1)
 
@@ -124,6 +124,14 @@ def _parse_arguments(version="Unknown", argv=None):
         "--version",
         action="version",
         version="%(prog)s " + version,
+    )
+
+    parser.add_argument(
+        "-w",
+        "--words_per_topic",
+        help="number of words per topic",
+        type=int,
+        default=10,
     )
 
     # Exit if no arguments are given

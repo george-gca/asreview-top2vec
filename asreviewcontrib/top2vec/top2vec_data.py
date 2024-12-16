@@ -15,7 +15,8 @@ REMOVE_DUPLICATES = True
 
 def gather_topics_information(
         asreview_data_object: ASReviewData,
-        model_file: str):
+        model_file: str,
+        n: int = 10):
 
     # load data
     print("Loading data...")
@@ -45,15 +46,14 @@ def gather_topics_information(
     topics_words = []
     output_dir = Path('top2vec/').expanduser()
     output_dir.mkdir(exist_ok=True)
-    # threshold = 0.7
 
     for topic_num, topic_size, words, scores in zip(topic_nums, topic_sizes, topic_words, word_scores):
         print(f'\nTopic {topic_num} has {topic_size} documents')
         topics_data.append({'Topic': topic_num, 'Documents': topic_size})
 
-        topic_word_scores = [f'{score:.3f} - {word}' for score, word in zip(islice(scores, 10), words)]
+        topic_word_scores = [f'{score:.3f} - {word}' for score, word in zip(islice(scores, n), words)]
         topic_word_scores_str = '\n\t'.join(topic_word_scores)
-        print(f'Most important words:\n\t{topic_word_scores_str}')
+        print(f'{n} most important words:\n\t{topic_word_scores_str}')
 
         for score, word in zip(scores, words):
             topics_words.append({'Word': word, 'Score': score, 'Topic': topic_num})
