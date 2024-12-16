@@ -10,6 +10,7 @@ from asreview.data import load_data
 from asreview.entry_points import BaseEntryPoint
 from asreviewcontrib.top2vec.projector import create_projector_config
 from asreviewcontrib.top2vec.top2vec_clustering import run_clustering  # noqa: E501
+from asreviewcontrib.top2vec.top2vec_data import gather_topics_information
 
 
 class Top2VecEntryPoint(BaseEntryPoint):
@@ -34,6 +35,10 @@ class Top2VecEntryPoint(BaseEntryPoint):
 
         elif args.create_projector_config:
             create_projector_config(args.create_projector_config, args.metadata)
+
+        elif args.topics_information:
+            data = load_data(args.topics_information)
+            gather_topics_information(data, args.model_file)
 
         sys.exit(1)
 
@@ -63,6 +68,13 @@ def _parse_arguments(version="Unknown", argv=None):
         help="creates a embedding projector config file for the specified data file",
         type=str,
     )
+    group.add_argument(
+        "-t",
+        "--topics_information",
+        metavar="INPUT FILEPATH",
+        help="creates information about the topics found",
+        type=str,
+    )
 
     parser.add_argument(
         "-m",
@@ -72,11 +84,12 @@ def _parse_arguments(version="Unknown", argv=None):
         type=str,
     )
 
+    # TODO: make it required when topics_information is given
     parser.add_argument(
-        "-v",
-        "--version",
-        action="version",
-        version="%(prog)s " + version,
+        "--model_file",
+        metavar="INPUT FILEPATH",
+        help="model file created by top2vec",
+        type=str,
     )
 
     parser.add_argument(
@@ -89,21 +102,28 @@ def _parse_arguments(version="Unknown", argv=None):
     )
 
     parser.add_argument(
-        "--reduce_dimensionality",
-        action="store_true",
-        help="reduce dimensionality after top2vec",
-    )
-
-    parser.add_argument(
         "--remove_abstracts",
         action="store_true",
         help="remove abstracts (if any)",
     )
 
     parser.add_argument(
+        "--reduce_dimensionality",
+        action="store_true",
+        help="reduce dimensionality after top2vec",
+    )
+
+    parser.add_argument(
         "--remove_urls",
         action="store_true",
         help="remove urls (if any)",
+    )
+
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version="%(prog)s " + version,
     )
 
     # Exit if no arguments are given
@@ -122,5 +142,8 @@ def _parse_arguments(version="Unknown", argv=None):
 
     if args.output is not None:
         _valid_file(args.output)
+
+    if args.topics_information is not None:
+        _valid_file(args.topics_information)
 
     return args
