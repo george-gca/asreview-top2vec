@@ -8,7 +8,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
+        python-version: '3.11'
         architecture: 'x64'
     - name: Install flake8
       run: |
@@ -21,20 +21,20 @@ jobs:
     name: test-asreview-latest
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
-        path: asr-semantic-clustering
-    - uses: actions/checkout@v2
+        path: asr-top2vec
+    - uses: actions/checkout@v4
       with:
         repository: asreview/asreview
         path: asr-core
     - uses: actions/setup-python@v1
       with:
-        python-version: '3.8'
+        python-version: '3.11'
         architecture: 'x64'
     - name: Install packages
       run: |
         pip install pytest
         pip install --upgrade setuptools>=41.0.0
         pip install ./asr-core[all]
-        pip install ./asr-semantic-clustering
+        pip install ./asr-top2vec

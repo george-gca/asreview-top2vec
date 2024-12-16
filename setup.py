@@ -13,14 +13,14 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='asreview-semantic-clustering',
-    description='Semantic clustering tool for the ASReview project',
+    name='asreview-top2vec',
+    description='Top2Vec tool for the ASReview project',
     version='0.1',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/asreview/semantic-clusters',
-    author='Utrecht University',
-    author_email='asreview@uu.nl',
+    url='https://github.com/george-gca/asreview-top2vec',
+    author='George Araújo',
+    author_email='george.gcac@gmail.com',
     classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha
@@ -31,11 +31,11 @@ setup(
         # Pick your license as you wish
         'License :: OSI Approved :: Apache Software License',
 
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
-    keywords='asreview extension semantic clustering clusters visualization',
+    keywords='asreview extension top2vec clusters visualization',
     packages=find_namespace_packages(include=['asreviewcontrib.*']),
     install_requires=[
         "asreview",
@@ -49,14 +49,14 @@ setup(
 
     entry_points={
         "asreview.entry_points": [
-            "semantic_clustering = asreviewcontrib.semantic_clustering.main:SemClusEntryPoint",  # noqa: E501
+            "top2vec = asreviewcontrib.top2vec.main:Top2VecEntryPoint",  # noqa: E501
         ]
     },
 
     project_urls={
         'Bug Reports':
-            "https://github.com/asreview/semantic-clusters/issues",
+            "https://github.com/george-gca/asreview-top2vec/issues",
         'Source':
-            "https://github.com/asreview/semantic-clusters",
+            "https://github.com/george-gca/asreview-top2vec",
     },
 )
