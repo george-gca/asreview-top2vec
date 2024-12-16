@@ -66,7 +66,7 @@ In the processing phase, a dataset is processed and clustered for use in the int
 asreview top2vec -f <input.tsv or url> -o <output_file.tsv> --reduce_dimensionality --remove_abstracts --remove_urls
 ```
 
-Using `-f` will process a file and store the results in the file specified in `-o`. `--reduce_dimensionality` will reduce the dimensionality of the data to 5D, `--remove_abstracts` will remove abstracts from the data, and `--remove_urls` will remove urls from the data.
+Using `-f` will process a file and store the results in the file specified in `-o`. `--reduce_dimensionality` will reduce the dimensionality of the data to 5D, `--remove_abstracts` will remove abstracts from the data, and `--remove_urls` will remove urls from the data. Note that usually you won't need to use `--reduce_dimensionality`, as the Embedding Projector can handle high-dimensional data and display it in 3D or 2D. This is only useful if you have a really large amount of data. The `--remove_abstracts` and `--remove_urls` options are useful when the abstracts and urls are not needed in the visualization.
 
 Top2Vec uses an [`ASReviewData` object](https://asreview.readthedocs.io/en/stable/generated/asreview.ASReviewData.html), and can handle files, urls and benchmark sets:
 
@@ -101,7 +101,25 @@ You can either use the online [TensorBoard's Embedding Projector](https://projec
 tensorboard --logdir=./output_dir/
 ```
 
-Then, open a browser and go to [`http://localhost:6006/`](http://localhost:6006/). If the browser doesn't show anything, refresh it (F5) so that the data is loaded.
+Then, open a browser and go to [`http://localhost:6006/#projector`](http://localhost:6006/#projector). If the browser doesn't show anything, refresh it (F5) so that the data is loaded. For more information about the embedding projector, see the official [TensorBoard's Embedding Projector](https://research.google/blog/open-sourcing-the-embedding-projector-a-tool-for-visualizing-high-dimensional-data/) release post.
+
+At first opening, the Embedding Projector will show the data in a 3D visualization, like this one:
+
+![Embedding projector first load](/docs/embedding_projector_01.png)
+
+The Top2Vec model automatically assigns topics for each document. You can visualize this information by enabling the `Color by` option and selecting the `cluster_id` field. This will color the data points according to the topic assigned by the Top2Vec model. The following image shows the data colored by the topic field:
+
+![Selecting colored by topic in Embedding projector](/docs/embedding_projector_02.png)
+
+![Embedding projector colored by topic](/docs/embedding_projector_03.png)
+
+By default, the Embedding Projector shows the data in 3D using the PCA dimensionality reduction algorithm. You can change this algorithm by selecting one of the options in the lower left. For example, selecting the t-SNE algorithm will show the data in 3D:
+
+![Selecting t-SNE in Embedding projector](/docs/embedding_projector_04.png)
+
+If you select a data point, you can see its nearest neighbours in the original space, and also some information about the document in the right panel. This information is taken from the metadata file. The following image shows the information about a document:
+
+![Embedding projector document information](/docs/embedding_projector_05.png)
 
 ### Fetching topics information
 
