@@ -133,7 +133,7 @@ This command will fetch the topics information from the trained Top2Vec model us
 
 An example of its console output given the input `https://raw.githubusercontent.com/george-gca/ai_conferences_info/refs/heads/main/ASReview/NeurIPS/neurips_2020.tsv` and the top2vec model trained from this file is:
 
-```shell
+```txt
 Topic 0 has 370 documents
 10 most important words:
         0.658 - bounds
